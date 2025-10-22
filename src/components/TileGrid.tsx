@@ -131,15 +131,19 @@ const TileGrid: React.FC = () => {
 
         {/* Hero */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-lg mb-6">
-            <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">AB</span>
+          <div className="inline-flex items-center justify-center w-16 h-16 sm:w-16 sm:h-16 
+                          bg-blue-500 sm:bg-gradient-to-br sm:from-blue-500 sm:to-purple-600 
+                          rounded-2xl shadow-lg mb-6">
+            <div className="w-8 h-8 sm:w-8 sm:h-8 bg-white/20 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">
+                {user?.email?.slice(0, 2).toUpperCase() || "AB"}
+              </span>
             </div>
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
             Tableau de Bord
           </h2>
-          <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
             Accédez à l&apos;ensemble de vos outils professionnels dans une interface unifiée et fluide.
           </p>
         </div>
@@ -178,7 +182,7 @@ const TileGrid: React.FC = () => {
           ))}
         </div>
 
-        
+
       {/* Stats */}
         <div className="mt-20 max-w-4xl mx-auto">
           <Card className="bg-white/80 backdrop-blur-md rounded-3xl border border-gray-100 shadow-lg p-8">
