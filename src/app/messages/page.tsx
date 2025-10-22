@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Header from "@/components/Header";
 import { Search, Send, Paperclip, Smile, ChevronLeft, Plus } from "lucide-react";
 import { useRouter } from "next/navigation"; 
@@ -11,6 +11,8 @@ import { useMessages } from "@/lib/useMessages";
 import { useUsers } from "@/lib/useUsers";
 import { createChat } from "@/lib/useCreateChat";
 import Image from "next/image";
+import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
+
 
 export default function MessagesPage() {
   const { user } = useAuth();
@@ -19,12 +21,29 @@ export default function MessagesPage() {
   const { messages, sendMessage } = useMessages(selectedChatId || "", user?.uid);
   const [message, setMessage] = useState("");
   const router = useRouter();
-
+  const emojiRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (emojiRef.current && !emojiRef.current.contains(event.target as Node)) {
+        setShowEmojiPicker(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+  
   // --- Modal pour nouvelle conversation
   const { users } = useUsers();
   const [showModal, setShowModal] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
+  const handleEmojiClick = (emojiData: EmojiClickData) => {
+    setMessage(prev => prev + emojiData.emoji);
+  };
+  
   const handleSend = async () => {
     if (!message.trim() || !selectedChatId || !user) return;
     await sendMessage(message, user.uid);
@@ -187,9 +206,9 @@ export default function MessagesPage() {
                         <div
                           className={`
                             px-3 py-2 sm:px-4 sm:py-2 rounded-2xl text-xs sm:text-sm max-w-xs sm:max-w-sm break-words
-                            text-white
+                            text-gray
                             ${isCurrentUser
-                              ? "bg-blue-600 lg:bg-gradient-to-br lg:from-blue-600 lg:to-purple-600"
+                              ? "bg-blue-400 lg:bg-gradient-to-br lg:from-blue-400 lg:to-purple-300"
                               : "bg-gray-100 text-gray-800"
                             }
                           `}
@@ -205,10 +224,11 @@ export default function MessagesPage() {
                 </div>
 
                 {/* Input */}
-                <div className="p-2 sm:p-4 border-t border-gray-100 flex items-center gap-2 sm:gap-3">
+                <div className="relative flex items-center gap-2 sm:gap-3 p-2 sm:p-4 border-t border-gray-100 bg-white">
                   <button className="p-2 hover:bg-gray-100 rounded-full transition">
                     <Paperclip size={16} className="text-gray-500" />
                   </button>
+
                   <input
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
@@ -216,15 +236,25 @@ export default function MessagesPage() {
                     className="flex-1 bg-gray-50 border border-gray-200 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                     onKeyDown={(e) => e.key === "Enter" && handleSend()}
                   />
-                  <button className="p-2 hover:bg-gray-100 rounded-full transition">
-                    <Smile size={16} className="text-gray-500" />
-                  </button>
+
+                  <div className="relative" ref={emojiRef}>
+                    <button
+                      onClick={() => setShowEmojiPicker(prev => !prev)}
+                      className="p-2 hover:bg-gray-100 rounded-full transition"
+                    >
+                      <Smile size={16} className="text-gray-500" />
+                    </button>
+
+                    {showEmojiPicker && (
+                      <div className="absolute bottom-12 right-0 z-50">
+                        <EmojiPicker onEmojiClick={handleEmojiClick} width={300} height={350} lazyLoadEmojis />
+                      </div>
+                    )}
+                  </div>
+
                   <button
                     onClick={handleSend}
-                    className={`
-                      bg-blue-600 text-white rounded-full p-2 sm:p-2.5 hover:scale-[1.05] transition-transform
-                      lg:bg-gradient-to-br lg:from-blue-600 lg:to-purple-600
-                    `}
+                    className="bg-blue-600 text-white rounded-full p-2 sm:p-2.5 hover:scale-[1.05] transition-transform lg:bg-gradient-to-br lg:from-blue-600 lg:to-purple-600"
                   >
                     <Send size={16} />
                   </button>
