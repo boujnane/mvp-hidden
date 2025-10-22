@@ -173,8 +173,38 @@ const TileGrid: React.FC = () => {
                 ))}
               </div>
             </div>
+
+
           ))}
         </div>
+
+        
+      {/* Stats */}
+        <div className="mt-20 max-w-4xl mx-auto">
+          <Card className="bg-white/80 backdrop-blur-md rounded-3xl border border-gray-100 shadow-lg p-8">
+            <div className="text-center mb-8">
+              <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2">Aperçu du système</h3>
+              <p className="text-gray-500">Tout fonctionne normalement</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+              {[
+                { label: "Annonces", value: "128", trend: "+12" },
+                { label: "Publiés", value: "24", trend: "+3" },
+                { label: "Messages", value: "5", trend: "0" },
+                { label: "Utilisateurs", value: "18", trend: "+2" }
+              ].map((stat, index) => (
+                <div key={index} className="p-4">
+                  <div className="text-2xl font-bold text-gray-800 mb-1">{stat.value}</div>
+                  <div className="text-sm text-gray-500">{stat.label}</div>
+                  <div className={`text-xs mt-1 ${stat.trend.startsWith('+') ? 'text-yellow-600' : 'text-gray-500'}`}>
+                    {stat.trend}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+
 
       </div>
     </div>
