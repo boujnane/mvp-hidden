@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 import ProtectedRoute from "@/lib/ProtectedRoute";
 import { collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "firebase/firestore";
 import { auth, db } from "@/lib/firebaseConfig";
+import { createChat } from "@/lib/useCreateChat";
+import { useAuth } from "@/lib/FirbaseAuthProvider";
 
 type Annonce = {
   id: string;
@@ -131,6 +133,18 @@ export default function AnnoncesPage() {
     }
   };
 
+  const { user } = useAuth();
+  const handleRespond = async (annonceOwnerId: string) => {
+    if (!user) return;
+  
+    // Crée toujours un nouveau chat entre l'utilisateur et le créateur de l'annonce
+    const chatId = await createChat([user.uid, annonceOwnerId]);
+  
+    // Redirige vers le chat
+    router.push(`/messages/${chatId}`);
+  };
+
+  
   // --- Editer ---
   const editAnnonce = (id: string) => {
     const target = annonces.find((a) => a.id === id);
@@ -276,9 +290,20 @@ export default function AnnoncesPage() {
                 <input value={filterLocation} onChange={(e)=>setFilterLocation(e.target.value)} placeholder="Localisation..." className="px-3 py-2 rounded-xl border border-gray-200 text-sm" />
 
                 <div className="flex gap-2">
-                  <input type="date" value={dateFrom} onChange={(e)=>setDateFrom(e.target.value)} className="px-3 py-2 rounded-xl border border-gray-200 text-sm" />
-                  <input type="date" value={dateTo} onChange={(e)=>setDateTo(e.target.value)} className="px-3 py-2 rounded-xl border border-gray-200 text-sm" />
+                  <input
+                    type="date"
+                    value={dateFrom}
+                    onChange={(e) => setDateFrom(e.target.value)}
+                    className="border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
+                  />
+                  <input
+                    type="date"
+                    value={dateTo}
+                    onChange={(e) => setDateTo(e.target.value)}
+                    className="border border-gray-300 rounded-md px-2 py-1 text-sm w-full"
+                  />
                 </div>
+
 
                 <Select.Root value={sortBy} onValueChange={(v)=>setSortBy(v as any)}>
                   <Select.Trigger className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm flex justify-between items-center">
@@ -471,7 +496,10 @@ export default function AnnoncesPage() {
                               </button>
                             </>
                           ) : (
-                            <button className="inline-flex items-center gap-1 px-3 py-1 sm:px-3 sm:py-2 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors text-xs sm:text-sm">
+                            <button
+                              onClick={() => handleRespond(a.ownerId)}
+                              className="inline-flex items-center gap-1 px-3 py-1 sm:px-3 sm:py-2 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors text-xs sm:text-sm"
+                            >
                               Répondre
                             </button>
                           )}
