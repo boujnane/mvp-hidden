@@ -233,7 +233,8 @@ export default function AnnoncesPage() {
                 <button
                   onClick={() => setExpandedForm((s) => !s)}
                   aria-expanded={expandedForm}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-blue-600 to-purple-600 text-white rounded-xl shadow hover:scale-[1.02] transition-transform"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl shadow hover:scale-[1.02] transition-transform
+                             lg:bg-gradient-to-br lg:from-blue-600 lg:to-purple-600"
                 >
                   <Send size={16} />
                   {expandedForm ? "Fermer" : "Nouvelle annonce"}
@@ -299,40 +300,100 @@ export default function AnnoncesPage() {
                 <form onSubmit={handleSubmit} className="bg-white/90 backdrop-blur-xl border border-gray-100 rounded-3xl shadow-2xl p-8 mb-8">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Organisation</label>
-                      <input name="organisation" value={form.organisation} onChange={handleChange} placeholder="Ex: Studio Nova" className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Organisation</label>
+                      <input
+                        name="organisation"
+                        value={form.organisation}
+                        onChange={handleChange}
+                        placeholder="Ex: Studio Nova"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Titre</label>
-                      <input name="titre" value={form.titre} onChange={handleChange} placeholder="Ex: Recherche Artiste / Prestataire" className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                      <input
+                        name="titre"
+                        value={form.titre}
+                        onChange={handleChange}
+                        placeholder="Ex: Recherche Artiste / Prestataire"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
                     </div>
                     <div className="md:col-span-2">
                       <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                      <textarea name="description" value={form.description} onChange={handleChange} rows={4} placeholder="Décrivez le projet..." className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                      <textarea
+                        name="description"
+                        value={form.description}
+                        onChange={handleChange}
+                        rows={4}
+                        placeholder="Décrivez le projet..."
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Profil recherché</label>
-                      <input name="profil" value={form.profil} onChange={handleChange} placeholder="Ex: Illustrateurs, photographes..." className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                      <input
+                        name="profil"
+                        value={form.profil}
+                        onChange={handleChange}
+                        placeholder="Ex: Illustrateurs, photographes..."
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Contact</label>
-                      <input name="contact" value={form.contact} onChange={handleChange} placeholder="Email / chat / téléphone" className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                      <input
+                        name="contact"
+                        value={form.contact}
+                        onChange={handleChange}
+                        placeholder="Email / chat / téléphone"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Localisation</label>
-                      <input name="location" value={form.location} onChange={handleChange} placeholder="Ville, Pays (optionnel)" className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                      <input
+                        name="location"
+                        value={form.location}
+                        onChange={handleChange}
+                        placeholder="Ville, Pays (optionnel)"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
                     </div>
                     <div className="flex flex-col justify-end">
                       <label className="flex items-center gap-2 text-sm text-gray-900 mb-2">
-                        <input type="checkbox" name="urgent" checked={form.urgent} onChange={handleChange} className="accent-yellow-500"/>
+                        <input
+                          type="checkbox"
+                          name="urgent"
+                          checked={form.urgent}
+                          onChange={handleChange}
+                          className="accent-yellow-500"
+                        />
                         <span>Annonce urgente</span>
                       </label>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Date limite / évènement</label>
-                      <input name="date" type="date" value={form.date} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                      <input
+                        name="date"
+                        type="date"
+                        value={form.date}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
                     </div>
                     <div className="md:col-span-2 flex justify-end items-center gap-3 mt-2">
-                      <button type="button" onClick={() => { setForm(emptyForm); setExpandedForm(false); }} className="px-4 py-2 rounded-xl bg-gray-100 text-gray-700">Annuler</button>
-                      <button type="submit" disabled={submitting} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 text-white">
+                      <button
+                        type="button"
+                        onClick={() => { setForm(emptyForm); setExpandedForm(false); }}
+                        className="px-4 py-2 rounded-xl bg-gray-100 text-gray-700"
+                      >
+                        Annuler
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={submitting}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 text-white
+                                   lg:bg-gradient-to-br lg:from-blue-600 lg:to-purple-600"
+                      >
                         <Send size={16}/> {submitting ? "Publication..." : "Publier l'annonce"}
                       </button>
                     </div>
@@ -351,11 +412,16 @@ export default function AnnoncesPage() {
             ) : (
               <Accordion.Root type="multiple" className="space-y-4">
                 {filtered.map((a) => (
-                  <Accordion.Item key={a.id} value={a.id} className="bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-md overflow-hidden">
+                  <Accordion.Item
+                    key={a.id}
+                    value={a.id}
+                    className="bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-md overflow-hidden"
+                  >
                     <Accordion.Header>
                       <Accordion.Trigger className="w-full flex justify-between items-center p-4 cursor-pointer">
                         <div className="flex items-center gap-4">
-                          <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-white font-semibold ${a.urgent ? "bg-yellow-600" : "bg-gradient-to-br from-blue-600 to-purple-600"}`}>
+                          <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-white font-semibold
+                                           ${a.urgent ? "bg-yellow-600" : "bg-blue-600 lg:bg-gradient-to-br lg:from-blue-600 lg:to-purple-600"}`}>
                             {initials(a.organisation)}
                           </div>
                           <div className="flex flex-col">
@@ -388,13 +454,19 @@ export default function AnnoncesPage() {
                       </div>
                       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
                         <div className="text-xs sm:text-sm text-gray-500">Contact: {a.contact}</div>
-                        <div className="flex flex-wrap gap-2 mt-1 sm:mt-0">
+                        <div className="flex justify-end gap-2 mt-1 sm:mt-0 w-full">
                           {a.ownerId === currentUserId ? (
                             <>
-                              <button onClick={() => editAnnonce(a.id)} className="inline-flex items-center gap-1 px-3 py-1 sm:px-3 sm:py-2 rounded-xl bg-gray-100 text-gray-700 hover:scale-[1.02] transition-transform text-xs sm:text-sm">
+                              <button
+                                onClick={() => editAnnonce(a.id)}
+                                className="inline-flex items-center gap-1 px-3 py-1 sm:px-3 sm:py-2 rounded-xl bg-gray-100 text-gray-700 hover:scale-[1.02] transition-transform text-xs sm:text-sm"
+                              >
                                 <Edit3 size={12} /> Modifier
                               </button>
-                              <button onClick={() => removeAnnonce(a.id)} className="inline-flex items-center gap-1 px-3 py-1 sm:px-3 sm:py-2 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 transition-colors text-xs sm:text-sm">
+                              <button
+                                onClick={() => removeAnnonce(a.id)}
+                                className="inline-flex items-center gap-1 px-3 py-1 sm:px-3 sm:py-2 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 transition-colors text-xs sm:text-sm"
+                              >
                                 <Trash2 size={12} /> Supprimer
                               </button>
                             </>
