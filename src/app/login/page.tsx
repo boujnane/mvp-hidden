@@ -21,24 +21,21 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // 1️⃣ Connexion avec Firebase Auth
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // 2️⃣ Vérifier si le document existe déjà dans Firestore
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
 
       if (!userSnap.exists()) {
-        // 3️⃣ Si pas existant, on crée le document
         await setDoc(userRef, {
-          displayName: user.email, // ou un pseudo si tu en veux un
+          displayName: user.email,
           email: user.email,
           createdAt: serverTimestamp(),
         });
       }
 
-      router.push("/"); // redirection vers home
+      router.push("/");
     } catch (error: any) {
       alert("Email ou mot de passe incorrect !");
       console.error(error);
@@ -46,21 +43,21 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-50 via-blue-100/60 to-purple-100 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-blue-50 px-4 sm:bg-gradient-to-b sm:from-blue-50 sm:via-blue-100 sm:to-purple-100">
       {/* Logo */}
-      <div className="flex items-center mb-8 space-x-3 z-10">
-        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
+      <div className="flex items-center mb-6 space-x-2 sm:space-x-3">
+        <div className="w-10 h-10 bg-blue-500 sm:bg-gradient-to-br sm:from-blue-500 sm:to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
           <span className="text-white font-extrabold text-lg">H</span>
         </div>
-        <span className="text-2xl font-bold text-gray-900">HIDDEN</span>
+        <span className="text-xl sm:text-2xl font-bold text-gray-900">HIDDEN</span>
       </div>
 
       {/* Form */}
       <form
         onSubmit={handleSubmit}
-        className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl w-full max-w-md relative z-10"
+        className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-full max-w-sm"
       >
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-900">
+        <h2 className="text-xl sm:text-2xl font-bold mb-5 text-center text-gray-900">
           Connexion
         </h2>
 
@@ -94,14 +91,14 @@ export default function LoginPage() {
           />
         </div>
 
-        {/* Remember Me (Radix Switch) */}
-        <div className="flex items-center mb-6 gap-3">
+        {/* Remember Me */}
+        <div className="flex items-center mb-6 gap-2">
           <Switch.Root
             checked={remember}
             onCheckedChange={(checked) => setRemember(checked)}
-            className="w-11 h-6 bg-gray-200 rounded-full relative data-[state=checked]:bg-blue-600 transition-colors"
+            className="w-10 h-5 bg-gray-200 rounded-full relative data-[state=checked]:bg-blue-600 transition-colors"
           >
-            <Switch.Thumb className="block w-5 h-5 bg-white rounded-full shadow transform transition-transform data-[state=checked]:translate-x-5" />
+            <Switch.Thumb className="block w-4 h-4 bg-white rounded-full shadow transform transition-transform data-[state=checked]:translate-x-5" />
           </Switch.Root>
           <Label.Root className="text-sm text-gray-700 cursor-pointer">
             Se souvenir de moi
@@ -111,17 +108,17 @@ export default function LoginPage() {
         {/* Submit */}
         <button
           type="submit"
-          className="w-full bg-gradient-to-br from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-colors font-medium mb-4"
+          className="w-full bg-blue-500 sm:bg-gradient-to-br sm:from-blue-600 sm:to-purple-600 text-white py-3 rounded-lg hover:bg-blue-600 sm:hover:from-blue-700 sm:hover:to-purple-700 transition-colors font-medium mb-4 shadow"
         >
           Se connecter
         </button>
 
-        {/* Link */}
+        {/* Links */}
         <p className="mt-2 text-center text-gray-500 text-sm">
           <Link href="/login" className="text-blue-600 hover:underline">
             Mot de passe oublié ?
           </Link>
-          <br></br>
+          <br />
           <Link href="/register" className="text-blue-600 hover:underline">
             S&apos;inscrire ?
           </Link>
