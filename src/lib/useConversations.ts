@@ -12,7 +12,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { db } from "./firebaseConfig";
-import { Message } from "./useMessages";
+import { Message } from "@/types";
 
 export interface Chat {
   id: string;
